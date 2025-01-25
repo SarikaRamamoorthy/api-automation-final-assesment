@@ -6,12 +6,12 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductResponse{
-	private List<DataItem> data;
+	private List<DataItemResponse> data;
 
-	public void setData(List<DataItem> data){
+	public void setData(List<DataItemResponse> data){
 		this.data = data;
 	}
-	public List<DataItem> getData(){
+	public List<DataItemResponse> getData(){
 		return data;
 	}
 }

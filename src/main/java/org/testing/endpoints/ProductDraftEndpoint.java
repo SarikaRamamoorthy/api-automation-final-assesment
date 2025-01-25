@@ -7,8 +7,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import static io.restassured.RestAssured.given;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.testing.requestPojo.draft.DraftRequest;
 
 
 public class ProductDraftEndpoint {
@@ -39,5 +42,37 @@ public class ProductDraftEndpoint {
                 .then().extract().response();
         response.prettyPrint();
         return response;
+    }
+
+    public Response postDraftDetails(DraftRequest draftRequest) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            response = requestSpecification
+                    .given()
+                    .body(objectMapper.writeValueAsString(draftRequest))
+                    .post(baseURI + properties.getProperty("post.draft.details.endpoint"))
+                    .then().extract().response();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        response.prettyPrint();
+        return response;
+    }
+
+    public Response getDraftDetails(String draftNumber) {
+        response = requestSpecification
+                .given()
+                .queryParam("draftNumber", draftNumber)
+                .get(baseURI + properties.getProperty("get.draft.details.endpoint"))
+                .then().extract().response();
+        response.prettyPrint();
+        return response;
+    }
+
+    public Response getAllDraftDetails() {
+        response = requestSpecification
+                .given()
+                .get(baseURI + properties.getProperty("get.allDraft.details.endpoint"))
+                .then().extract().response();
     }
 }

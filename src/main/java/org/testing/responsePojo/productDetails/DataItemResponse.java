@@ -2,31 +2,31 @@ package org.testing.responsePojo.productDetails;
 
 import java.util.List;
 
-public class DataItem{
-	private String blibliSku;
-	private Object productItemWidth;
-	private Object sellingUnitPrice;
-	private String productDetailPage;
-	private List<String> categoryHierarchy;
-	private Object packageWeight;
+public class DataItemResponse {
+    private String productName;
+    private String itemName;//common
+    private String itemCode;//common
+    private double packageWeight;//common
+    private double productItemWidth;//common
+    private double productItemLength;//common
+    private double productItemHeight;//common
+	private String blibliSku;//common
+    private String productSku;//common
+    private String categoryName;//common
+    private String categoryCode;//common
+    private int totalStock;
+    private int totalReservedStock;
+    private int totalUnsellableStock;
+	private double sellingUnitPrice;
+	private String productDetailPage;//common
+    private int proposedQuantity;
+    private String imageUrl;
 	private boolean isProductFbb;
-	private String itemCode;
-	private int totalUnsellableStock;
 	private String sellerProductDetailPage;
+    private boolean isDisabled;
 	private String errorMessage;
-	private String categoryCode;
-	private String categoryName;
-	private String productName;
-	private Object productItemLength;
-	private int proposedQuantity;
 	private String halalStatus;
-	private String itemName;
-	private String productSku;
-	private int totalReservedStock;
-	private String imageUrl;
-	private Object productItemHeight;
-	private int totalStock;
-	private boolean isDisabled;
+    private List<String> categoryHierarchy;
 
 	public void setBlibliSku(String blibliSku){
 		this.blibliSku = blibliSku;
@@ -36,19 +36,19 @@ public class DataItem{
 		return blibliSku;
 	}
 
-	public void setProductItemWidth(Object productItemWidth){
+	public void setProductItemWidth(double productItemWidth){
 		this.productItemWidth = productItemWidth;
 	}
 
-	public Object getProductItemWidth(){
+	public double getProductItemWidth(){
 		return productItemWidth;
 	}
 
-	public void setSellingUnitPrice(Object sellingUnitPrice){
+	public void setSellingUnitPrice(double sellingUnitPrice){
 		this.sellingUnitPrice = sellingUnitPrice;
 	}
 
-	public Object getSellingUnitPrice(){
+	public double getSellingUnitPrice(){
 		return sellingUnitPrice;
 	}
 
@@ -68,11 +68,11 @@ public class DataItem{
 		return categoryHierarchy;
 	}
 
-	public void setPackageWeight(Object packageWeight){
+	public void setPackageWeight(double packageWeight){
 		this.packageWeight = packageWeight;
 	}
 
-	public Object getPackageWeight(){
+	public double getPackageWeight(){
 		return packageWeight;
 	}
 
@@ -140,11 +140,11 @@ public class DataItem{
 		return productName;
 	}
 
-	public void setProductItemLength(Object productItemLength){
+	public void setProductItemLength(double productItemLength){
 		this.productItemLength = productItemLength;
 	}
 
-	public Object getProductItemLength(){
+	public double getProductItemLength(){
 		return productItemLength;
 	}
 
@@ -196,11 +196,11 @@ public class DataItem{
 		return imageUrl;
 	}
 
-	public void setProductItemHeight(Object productItemHeight){
+	public void setProductItemHeight(double productItemHeight){
 		this.productItemHeight = productItemHeight;
 	}
 
-	public Object getProductItemHeight(){
+	public double getProductItemHeight(){
 		return productItemHeight;
 	}
 
