@@ -1,8 +1,8 @@
-package org.testing.requestPojo.draft;
+package org.testing.responsePojo.draft;
 
 import java.util.List;
 
-public class DraftShippingDetailsRequest {
+public class ShippingDetailsResponse {
     private String warehouseCode;
     private String warehouseName;
     private String shippingType; // SHIPPED_BY_BLIBLI (DEFAULT VALUE)
@@ -13,13 +13,13 @@ public class DraftShippingDetailsRequest {
     private String sellerPicPhoneNumber;
     private String emergencyContactEmail;
     private String emergencyContactNumber;
-    private List<DraftTimeSchedulesRequest> preferredTimeSchedules;
+    private List<String> preferredTimeSchedules;
 
-    public List<DraftTimeSchedulesRequest> getPreferredTimeSchedules() {
+    public List<String> getPreferredTimeSchedules() {
         return preferredTimeSchedules;
     }
 
-    public void setPreferredTimeSchedules(List<DraftTimeSchedulesRequest> preferredTimeSchedules) {
+    public void setPreferredTimeSchedules(List<String> preferredTimeSchedules) {
         this.preferredTimeSchedules = preferredTimeSchedules;
     }
 

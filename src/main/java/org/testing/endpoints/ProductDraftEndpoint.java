@@ -30,7 +30,7 @@ public class ProductDraftEndpoint {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        requestSpecification = given().baseUri(baseURI).accept("application/json").header("Header-Authenticator", properties.getProperty("header.authenticator"));
+        requestSpecification = given().baseUri(baseURI).accept("application/json").contentType("application/json").header("Header-Authenticator", properties.getProperty("header.authenticator"));
     }
 
     public Response getProductDetails() {
@@ -46,6 +46,11 @@ public class ProductDraftEndpoint {
 
     public Response postDraftDetails(DraftRequest draftRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            System.out.println(objectMapper.writeValueAsString(draftRequest));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         try {
             response = requestSpecification
                     .given()
@@ -72,7 +77,9 @@ public class ProductDraftEndpoint {
     public Response getAllDraftDetails() {
         response = requestSpecification
                 .given()
-                .get(baseURI + properties.getProperty("get.allDraft.details.endpoint"))
+                .get(baseURI + properties.getProperty("get.allDraft.details.consignment"))
                 .then().extract().response();
+        response.prettyPrint();
+        return response;
     }
 }

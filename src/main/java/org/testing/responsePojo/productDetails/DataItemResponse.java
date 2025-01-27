@@ -7,9 +7,9 @@ public class DataItemResponse {
     private String itemName;//common
     private String itemCode;//common
     private double packageWeight;//common
-    private double productItemWidth;//common
-    private double productItemLength;//common
-    private double productItemHeight;//common
+    private int productItemWidth;//common
+    private int productItemLength;//common
+    private int productItemHeight;//common
 	private String blibliSku;//common
     private String productSku;//common
     private String categoryName;//common
@@ -36,11 +36,11 @@ public class DataItemResponse {
 		return blibliSku;
 	}
 
-	public void setProductItemWidth(double productItemWidth){
+	public void setProductItemWidth(int productItemWidth){
 		this.productItemWidth = productItemWidth;
 	}
 
-	public double getProductItemWidth(){
+	public int getProductItemWidth(){
 		return productItemWidth;
 	}
 
@@ -140,11 +140,11 @@ public class DataItemResponse {
 		return productName;
 	}
 
-	public void setProductItemLength(double productItemLength){
+	public void setProductItemLength(int productItemLength){
 		this.productItemLength = productItemLength;
 	}
 
-	public double getProductItemLength(){
+	public int getProductItemLength(){
 		return productItemLength;
 	}
 
@@ -196,11 +196,11 @@ public class DataItemResponse {
 		return imageUrl;
 	}
 
-	public void setProductItemHeight(double productItemHeight){
+	public void setProductItemHeight(int productItemHeight){
 		this.productItemHeight = productItemHeight;
 	}
 
-	public double getProductItemHeight(){
+	public int getProductItemHeight(){
 		return productItemHeight;
 	}
 

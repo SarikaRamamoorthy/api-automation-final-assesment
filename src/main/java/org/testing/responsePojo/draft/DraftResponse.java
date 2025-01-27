@@ -1,5 +1,7 @@
 package org.testing.responsePojo.draft;
 
+import org.testing.requestPojo.draft.ShippingDetailsRequest;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ public class DraftResponse {
     private long potentialOutboundFee;
     private String deliveryNotes;
     private Map<String, DraftPropsResponse> selectedProducts;
-    private List<DraftShippingDetailsResponse> shippingDetails;
+    private List<ShippingDetailsRequest> shippingDetails;
 
     public String getDraftNumber() {
         return draftNumber;
@@ -78,11 +80,15 @@ public class DraftResponse {
         this.selectedProducts = selectedProducts;
     }
 
-    public Map<String, DraftShippingDetailsResponse> getShippingDetails() {
-        return shippingDetails;
+//    public Map<String, DraftShippingDetailsResponse> getShippingDetails() {
+//        return shippingDetails;
+//    }
+
+    public void setShippingDetails(List<ShippingDetailsRequest> shippingDetails) {
+        this.shippingDetails = shippingDetails;
     }
 
-    public void setShippingDetails(List<DraftShippingDetailsResponse> shippingDetails) {
-        this.shippingDetails = shippingDetails;
+    public List<ShippingDetailsRequest> getShippingDetails() {
+        return shippingDetails;
     }
 }

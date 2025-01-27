@@ -1,25 +1,27 @@
-package org.testing.responsePojo.draft;
+package org.testing.requestPojo.draft;
 
 import java.util.List;
 
-public class DraftShippingDetailsResponse {
+public class ShippingDetailsRequest {
     private String warehouseCode;
     private String warehouseName;
-    private String shippingType; // SHIPPED_BY_BLIBLI (DEFAULT VALUE)
+    private String warehouseAddress;
+    private String shippingType;
     private String pickupPointCode;
     private String pickupPointName;
     private String pickupPointAddress;
     private String sellerPicName;
     private String sellerPicPhoneNumber;
+    private List<String> preferredTimeSchedules;
     private String emergencyContactEmail;
     private String emergencyContactNumber;
-    private List<DraftTimeSchedulesResponse> preferredTimeSchedules;
 
-    public List<DraftTimeSchedulesResponse> getPreferredTimeSchedules() {
+
+    public List<String> getPreferredTimeSchedules() {
         return preferredTimeSchedules;
     }
 
-    public void setPreferredTimeSchedules(List<DraftTimeSchedulesResponse> preferredTimeSchedules) {
+    public void setPreferredTimeSchedules(List<String> preferredTimeSchedules) {
         this.preferredTimeSchedules = preferredTimeSchedules;
     }
 
@@ -103,4 +105,11 @@ public class DraftShippingDetailsResponse {
         this.warehouseCode = warehouseCode;
     }
 
+    public String getWarehouseAddress() {
+        return warehouseAddress;
+    }
+
+    public void setWarehouseAddress(String warehouseAddress) {
+        this.warehouseAddress = warehouseAddress;
+    }
 }

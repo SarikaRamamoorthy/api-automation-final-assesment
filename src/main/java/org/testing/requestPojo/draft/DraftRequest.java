@@ -4,23 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 public class DraftRequest {
-    private String draftNumber;
     private String merchantCode;
     private String merchantName;
-    private String draftStatus;
     private String userType;
-    private long potentialOutboundFee;
-    private String deliveryNotes;
-    private Map<String, DraftPropsRequest> selectedProducts;
-    private List<DraftShippingDetailsRequest> shippingDetails;
+    private String regionCode;
+    private String regionName;
+    private String draftStatus;
 
-    public String getDraftNumber() {
-        return draftNumber;
-    }
+    private Map<String, SelectedProductRequest> selectedProducts;
+    private List<String> addedProducts;
+    private List<String> removedProducts;
+    private List<String> notEligibleInAnyWarehouse;
+    private List<String> newNotEligibleInAnyWarehouse;
+    private List<String> notAllocatedProducts;
 
-    public void setDraftNumber(String draftNumber) {
-        this.draftNumber = draftNumber;
-    }
+    private List<WarehouseAllocationRequest> warehouseAllocations;
+    private List<ShippingDetailsRequest> shippingDetails;
+
+
 
     public String getMerchantCode() {
         return merchantCode;
@@ -53,36 +54,83 @@ public class DraftRequest {
     public void setUserType(String userType) {
         this.userType = userType;
     }
-
-    public long getPotentialOutboundFee() {
-        return potentialOutboundFee;
-    }
-
-    public void setPotentialOutboundFee(long potentialOutboundFee) {
-        this.potentialOutboundFee = potentialOutboundFee;
-    }
-
-    public String getDeliveryNotes() {
-        return deliveryNotes;
-    }
-
-    public void setDeliveryNotes(String deliveryNotes) {
-        this.deliveryNotes = deliveryNotes;
-    }
-
-    public Map<String, DraftPropsRequest> getSelectedProducts() {
+    public Map<String, SelectedProductRequest> getSelectedProducts() {
         return selectedProducts;
     }
 
-    public void setSelectedProducts(Map<String, DraftPropsRequest> selectedProducts) {
+    public void setSelectedProducts(Map<String, SelectedProductRequest> selectedProducts) {
         this.selectedProducts = selectedProducts;
     }
 
-    public Map<String, DraftShippingDetailsRequest> getShippingDetails() {
+    public void setShippingDetails(List<ShippingDetailsRequest> shippingDetails) {
+        this.shippingDetails = shippingDetails;
+    }
+
+    public List<ShippingDetailsRequest> getShippingDetails() {
         return shippingDetails;
     }
 
-    public void setShippingDetails(List<DraftShippingDetailsRequest> shippingDetails) {
-        this.shippingDetails = shippingDetails;
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
+    public List<String> getAddedProducts() {
+        return addedProducts;
+    }
+
+    public void setAddedProducts(List<String> addedProducts) {
+        this.addedProducts = addedProducts;
+    }
+
+    public List<String> getRemovedProducts() {
+        return removedProducts;
+    }
+
+    public void setRemovedProducts(List<String> removedProducts) {
+        this.removedProducts = removedProducts;
+    }
+
+    public List<String> getNotEligibleInAnyWarehouse() {
+        return notEligibleInAnyWarehouse;
+    }
+
+    public void setNotEligibleInAnyWarehouse(List<String> notEligibleInAnyWarehouse) {
+        this.notEligibleInAnyWarehouse = notEligibleInAnyWarehouse;
+    }
+
+    public List<String> getNewNotEligibleInAnyWarehouse() {
+        return newNotEligibleInAnyWarehouse;
+    }
+
+    public void setNewNotEligibleInAnyWarehouse(List<String> newNotEligibleInAnyWarehouse) {
+        this.newNotEligibleInAnyWarehouse = newNotEligibleInAnyWarehouse;
+    }
+
+    public List<String> getNotAllocatedProducts() {
+        return notAllocatedProducts;
+    }
+
+    public void setNotAllocatedProducts(List<String> notAllocatedProducts) {
+        this.notAllocatedProducts = notAllocatedProducts;
+    }
+
+    public List<WarehouseAllocationRequest> getWarehouseAllocations() {
+        return warehouseAllocations;
+    }
+
+    public void setWarehouseAllocations(List<WarehouseAllocationRequest> warehouseAllocations) {
+        this.warehouseAllocations = warehouseAllocations;
     }
 }
