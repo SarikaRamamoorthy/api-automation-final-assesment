@@ -24,7 +24,7 @@ import java.util.*;
 public class ProductDraftStepDef {
     private ProductDraftEndpoint productDraftEndpoint;
     private Response response;
-    private String draftNumber;
+    private static String draftNumber;
     private static DraftRequest draftRequest;
     private static DraftResponse draftResponse;
     private static ProductResponse productResponse;
@@ -75,6 +75,20 @@ public class ProductDraftStepDef {
         } catch (AssertionError e) {
             System.err.println("Assertion failed: " + e.getMessage());
         }
+    }
+
+    @And("validate data is not empty")
+    public void validateDataIsNotEmpty() {
+        String data = response.jsonPath().getString("data");
+        Assert.assertNotNull(data, "Data should not be null");
+        Assert.assertFalse(data.isEmpty(), "Data should not be empty");
+    }
+
+
+    @And("validate errors are empty")
+    public void validateErrorsAreEmpty() {
+        Map<String, Object> errors = response.jsonPath().getMap("errors");
+        Assert.assertTrue(errors.isEmpty(), "Errors should be empty");
     }
 
     @Given("response from previous api call is passed to draft request")
@@ -178,12 +192,12 @@ public class ProductDraftStepDef {
 
     @And("the draft number is saved")
     public void theDraftNumberIsSaved() {
-        this.draftNumber = this.response.jsonPath().getString("data");
+        draftNumber = this.response.jsonPath().getString("data");
     }
 
     @Given("draft number from previous api call is used to send GET request")
     public void draftNumberFromPreviousApiCall() {
-        this.response = productDraftEndpoint.getDraftDetails(this.draftNumber);
+        this.response = productDraftEndpoint.getDraftDetails(draftNumber);
     }
 
     @Then("the response is saved in a draftResponse POJO")
@@ -204,5 +218,10 @@ public class ProductDraftStepDef {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @When("a DELETE request is sent with the draft number as a query parameter")
+    public void aDELETERequestIsSentWithTheDraftNumberAsAQueryParameter() {
+        response = productDraftEndpoint.deleteDraft(draftNumber);
     }
 }

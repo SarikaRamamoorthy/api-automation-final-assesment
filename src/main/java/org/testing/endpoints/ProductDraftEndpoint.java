@@ -46,11 +46,13 @@ public class ProductDraftEndpoint {
 
     public Response postDraftDetails(DraftRequest draftRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
+
         try {
             System.out.println(objectMapper.writeValueAsString(draftRequest));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
         try {
             response = requestSpecification
                     .given()
@@ -67,8 +69,9 @@ public class ProductDraftEndpoint {
     public Response getDraftDetails(String draftNumber) {
         response = requestSpecification
                 .given()
+                .queryParam("businessPartnerCode", properties.getProperty("businessPartnerCode"))
                 .queryParam("draftNumber", draftNumber)
-                .get(baseURI + properties.getProperty("get.draft.details.endpoint"))
+                .get(baseURI + properties.getProperty("get.draft.details.consignment"))
                 .then().extract().response();
         response.prettyPrint();
         return response;
@@ -77,7 +80,22 @@ public class ProductDraftEndpoint {
     public Response getAllDraftDetails() {
         response = requestSpecification
                 .given()
+                .queryParam("page","1")
+                .queryParam("itemPerPage", "10")
+                .queryParam("sortBy", "lastModifiedDate")
+                .queryParam("sortOrder", "ASC")
                 .get(baseURI + properties.getProperty("get.allDraft.details.consignment"))
+                .then().extract().response();
+        response.prettyPrint();
+        return response;
+    }
+
+    public Response deleteDraft(String draftNumber) {
+        response = requestSpecification
+                .given()
+                .queryParam("businessPartnerCode", properties.getProperty("businessPartnerCode"))
+                .queryParam("draftNumber", draftNumber)
+                .delete(baseURI + properties.getProperty("delete.draft.consignment"))
                 .then().extract().response();
         response.prettyPrint();
         return response;
