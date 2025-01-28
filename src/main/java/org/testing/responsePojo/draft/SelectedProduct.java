@@ -1,37 +1,35 @@
 package org.testing.responsePojo.draft;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
-public class DraftPropsResponse {
-    private String blibliSku; //common
-    private String itemCode;//common
-    private String itemName;//common
-    private String productCode;
-    private String productSku;//common
-    private String categoryCode;//common
-    private String categoryName;//common
-    private double productItemLength;//common
-    private double productItemHeight;//common
-    private double productItemWidth;//common
-    private double packageWeight;//common
-    private String productDetailPage;//common
+public class SelectedProduct {
+    private String blibliSku;
+    private String itemCode;
+    private String itemName;
+    private String productSku;
+    private String categoryCode;
+    private String categoryName;
+    private int proposedQuantity;
+    private int recommendedQuantity;
+    private int confirmedQuantity;
+    private double productItemLength;
+    private double productItemHeight;
+    private double productItemWidth;
+    private double packageWeight;
+    private String productDetailPage;
     private String imageUrl;
+    @JsonProperty("isProductFbb")
     private boolean isProductFbb;
     private String sellerProductDetailPage;
-    private boolean isDisabled;
-    private String errorMessage;
+    private String recommendedQuantityErrorCode;
+    private int totalStock;
+    private int totalReservedStock;
+    private int totalUnsellableStock;
     private String halalStatus;
     private String storageLocation;
     private List<String> categoryHierarchy;
-    private List<DraftPropsStockAvailabilityResponse> stockAvailability;
-
-    public List<DraftPropsStockAvailabilityResponse> getStockAvailability() {
-        return stockAvailability;
-    }
-
-    public void setStockAvailability(List<DraftPropsStockAvailabilityResponse> stockAvailability) {
-        this.stockAvailability = stockAvailability;
-    }
 
     public String getBlibliSku() {
         return blibliSku;
@@ -57,14 +55,6 @@ public class DraftPropsResponse {
         this.itemName = itemName;
     }
 
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
     public String getProductSku() {
         return productSku;
     }
@@ -87,6 +77,30 @@ public class DraftPropsResponse {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public int getProposedQuantity() {
+        return proposedQuantity;
+    }
+
+    public void setProposedQuantity(int proposedQuantity) {
+        this.proposedQuantity = proposedQuantity;
+    }
+
+    public int getRecommendedQuantity() {
+        return recommendedQuantity;
+    }
+
+    public void setRecommendedQuantity(int recommendedQuantity) {
+        this.recommendedQuantity = recommendedQuantity;
+    }
+
+    public int getConfirmedQuantity() {
+        return confirmedQuantity;
+    }
+
+    public void setConfirmedQuantity(int confirmedQuantity) {
+        this.confirmedQuantity = confirmedQuantity;
     }
 
     public double getProductItemLength() {
@@ -142,7 +156,7 @@ public class DraftPropsResponse {
     }
 
     public void setProductFbb(boolean productFbb) {
-        isProductFbb = productFbb;
+        this.isProductFbb = productFbb;
     }
 
     public String getSellerProductDetailPage() {
@@ -153,20 +167,36 @@ public class DraftPropsResponse {
         this.sellerProductDetailPage = sellerProductDetailPage;
     }
 
-    public boolean isDisabled() {
-        return isDisabled;
+    public String getRecommendedQuantityErrorCode() {
+        return recommendedQuantityErrorCode;
     }
 
-    public void setDisabled(boolean disabled) {
-        isDisabled = disabled;
+    public void setRecommendedQuantityErrorCode(String recommendedQuantityErrorCode) {
+        this.recommendedQuantityErrorCode = recommendedQuantityErrorCode;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public int getTotalStock() {
+        return totalStock;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setTotalStock(int totalStock) {
+        this.totalStock = totalStock;
+    }
+
+    public int getTotalReservedStock() {
+        return totalReservedStock;
+    }
+
+    public void setTotalReservedStock(int totalReservedStock) {
+        this.totalReservedStock = totalReservedStock;
+    }
+
+    public int getTotalUnsellableStock() {
+        return totalUnsellableStock;
+    }
+
+    public void setTotalUnsellableStock(int totalUnsellableStock) {
+        this.totalUnsellableStock = totalUnsellableStock;
     }
 
     public String getHalalStatus() {
@@ -192,5 +222,4 @@ public class DraftPropsResponse {
     public void setCategoryHierarchy(List<String> categoryHierarchy) {
         this.categoryHierarchy = categoryHierarchy;
     }
-
 }

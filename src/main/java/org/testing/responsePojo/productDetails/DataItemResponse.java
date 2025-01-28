@@ -4,21 +4,21 @@ import java.util.List;
 
 public class DataItemResponse {
     private String productName;
-    private String itemName;//common
-    private String itemCode;//common
-    private double packageWeight;//common
-    private int productItemWidth;//common
-    private int productItemLength;//common
-    private int productItemHeight;//common
-	private String blibliSku;//common
-    private String productSku;//common
-    private String categoryName;//common
-    private String categoryCode;//common
+    private String itemName;
+    private String itemCode;
+    private double packageWeight;
+    private int productItemWidth;
+    private int productItemLength;
+    private int productItemHeight;
+	private String blibliSku;
+    private String productSku;
+    private String categoryName;
+    private String categoryCode;
     private int totalStock;
     private int totalReservedStock;
     private int totalUnsellableStock;
 	private double sellingUnitPrice;
-	private String productDetailPage;//common
+	private String productDetailPage;
     private int proposedQuantity;
     private String imageUrl;
 	private boolean isProductFbb;

@@ -1,8 +1,5 @@
 package org.testing.stepdefinitions;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,12 +27,9 @@ public class ProductDraftStepDef {
     private static ProductResponse productResponse;
     private static Properties properties = new Properties();
 
-    public ProductDraftStepDef() {
+    static {
         draftResponse = new DraftResponse();
         draftRequest = new DraftRequest();
-    }
-
-    static {
         try {
             FileInputStream propertyFile = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/config.properties");
             properties.load(propertyFile);
@@ -77,20 +71,6 @@ public class ProductDraftStepDef {
         }
     }
 
-    @And("validate data is not empty")
-    public void validateDataIsNotEmpty() {
-        String data = response.jsonPath().getString("data");
-        Assert.assertNotNull(data, "Data should not be null");
-        Assert.assertFalse(data.isEmpty(), "Data should not be empty");
-    }
-
-
-    @And("validate errors are empty")
-    public void validateErrorsAreEmpty() {
-        Map<String, Object> errors = response.jsonPath().getMap("errors");
-        Assert.assertTrue(errors.isEmpty(), "Errors should be empty");
-    }
-
     @Given("response from previous api call is passed to draft request")
     public void responseFromPreviousApiCallIsPassedToDraftRequest() {
         DataItemResponse responseData = productResponse.getData().getFirst();
@@ -113,6 +93,65 @@ public class ProductDraftStepDef {
         draftRequest.setWarehouseAllocations(getWarehouseAllocation(responseData));
         draftRequest.setShippingDetails(getShippingDetailRequest());
 
+    }
+
+    @When("the POST request is sent to save draft")
+    public void thePOSTRequestIsSentToSaveDraft() {
+        this.response = productDraftEndpoint.postDraftDetails(draftRequest);
+    }
+
+    @And("validate data is not empty")
+    public void validateDataIsNotEmpty() {
+        String data = response.jsonPath().getString("data");
+        Assert.assertNotNull(data, "Data should not be null");
+        Assert.assertFalse(data.isEmpty(), "Data should not be empty");
+    }
+
+
+    @And("validate errors are empty")
+    public void validateErrorsAreEmpty() {
+        Map<String, Object> errors = response.jsonPath().getMap("errors");
+        Assert.assertTrue(errors.isEmpty(), "Errors should be empty");
+    }
+
+    @And("the draft number is saved")
+    public void theDraftNumberIsSaved() {
+        draftNumber = this.response.jsonPath().getString("data");
+    }
+
+    @Given("draft number from previous api call is used to send GET request")
+    public void draftNumberFromPreviousApiCall() {
+        this.response = productDraftEndpoint.getDraftDetails(draftNumber);
+    }
+
+    @Then("the response is saved in a draftResponse POJO")
+    public void theResponseIsSavedInADraftResponsePOJO() {
+        draftResponse = this.response.getBody().as(DraftResponse.class);
+    }
+    @And("validate the response data")
+    public void validateTheResponseData() {
+        Assert.assertEquals(draftResponse.getData().getMerchantCode(), draftRequest.getMerchantCode(), "Merchant Code mismatch");
+        Assert.assertEquals(draftResponse.getData().getMerchantName(), draftRequest.getMerchantName(), "Merchant Name mismatch");
+        Assert.assertEquals(draftResponse.getData().getUserType(), draftRequest.getUserType(), "User Type mismatch");
+        Assert.assertEquals(draftResponse.getData().getRegionCode(), draftRequest.getRegionCode(), "Region Code mismatch");
+        Assert.assertEquals(draftResponse.getData().getRegionName(), draftRequest.getRegionName(), "Region Name mismatch");
+        Assert.assertEquals(draftResponse.getData().getDraftStatus(), draftRequest.getDraftStatus(), "Draft Status mismatch");
+
+
+        var requestProduct = draftRequest.getSelectedProducts().get(properties.getProperty("itemSku"));
+        var responseProduct = draftResponse.getData().getSelectedProducts().get(properties.getProperty("itemSku"));
+
+        Assert.assertEquals(responseProduct.getBlibliSku(), requestProduct.getBlibliSku(), "Blibli SKU mismatch");
+        Assert.assertEquals(responseProduct.getProductItemLength(), requestProduct.getProductItemLength(), "Product Item Length mismatch");
+        Assert.assertEquals(responseProduct.getProductItemHeight(), requestProduct.getProductItemHeight(), "Product Item Height mismatch");
+        Assert.assertEquals(responseProduct.getProductItemWidth(), requestProduct.getProductItemWidth(), "Product Item Width mismatch");
+        Assert.assertEquals(responseProduct.getPackageWeight(), requestProduct.getPackageWeight(), "Package Weight mismatch");
+
+    }
+
+    @When("a DELETE request is sent with the draft number as a query parameter")
+    public void aDELETERequestIsSentWithTheDraftNumberAsAQueryParameter() {
+        response = productDraftEndpoint.deleteDraft(draftNumber);
     }
 
     public List<ShippingDetailsRequest> getShippingDetailRequest() {
@@ -179,49 +218,7 @@ public class ProductDraftStepDef {
 
         selectedProduct.put(blibliSku,selectedProductRequest);
 
-//        Map<String, Map<String, SelectedProductRequest>> selectedProducts = new HashMap<>();
-//        selectedProducts.put("selectedProducts", selectedProduct);
-
         return selectedProduct;
     }
 
-    @When("the POST request is sent to save draft")
-    public void thePOSTRequestIsSentToSaveDraft() {
-        this.response = productDraftEndpoint.postDraftDetails(draftRequest);
-    }
-
-    @And("the draft number is saved")
-    public void theDraftNumberIsSaved() {
-        draftNumber = this.response.jsonPath().getString("data");
-    }
-
-    @Given("draft number from previous api call is used to send GET request")
-    public void draftNumberFromPreviousApiCall() {
-        this.response = productDraftEndpoint.getDraftDetails(draftNumber);
-    }
-
-    @Then("the response is saved in a draftResponse POJO")
-    public void theResponseIsSavedInADraftResponsePOJO() {
-        draftResponse = this.response.getBody().as(DraftResponse.class);
-    }
-
-    @When("a GET request to fetch all drafts is sent")
-    public void aGETRequestToFetchAllDraftsIsSent() {
-        this.response = productDraftEndpoint.getAllDraftDetails();
-    }
-
-    @And("check if previous draft is present in the current response")
-    public void checkIfPreviousDraftIsPresentInTheCurrentResponse() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            List<DraftResponse> draftResponses = objectMapper.readValue((JsonParser) this.response, new TypeReference<List<DraftResponse>>() {});
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @When("a DELETE request is sent with the draft number as a query parameter")
-    public void aDELETERequestIsSentWithTheDraftNumberAsAQueryParameter() {
-        response = productDraftEndpoint.deleteDraft(draftNumber);
-    }
 }

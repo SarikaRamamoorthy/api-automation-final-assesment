@@ -26,14 +26,8 @@ Feature: Product draft management
 	Scenario: get draft consignment
 	  When draft number from previous api call is used to send GET request
 	  Then the status code is validated
-#	  And the response is saved in a draftResponse POJO
-#	  And validate the response data
-
-#	@ApiTest
-#	Scenario: get all drafts
-#	  When a GET request to fetch all drafts is sent
-#	  Then the status code is validated
-##	  And check if previous draft is present in the current response
+	  And the response is saved in a draftResponse POJO
+	  And validate the response data
 
   	@ApiTest
 	Scenario: delete consignment draft using draft number

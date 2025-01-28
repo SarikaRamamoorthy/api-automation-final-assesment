@@ -1,7 +1,9 @@
 package org.testing.requestPojo.draft;
 
+
 import java.util.List;
 import java.util.Map;
+
 
 public class DraftRequest {
     private String merchantCode;
